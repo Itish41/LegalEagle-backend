@@ -41,6 +41,10 @@ func main() {
 	// Global rate limiter for most routes
 	router.Use(middleware.GlobalRateLimiter.Limit())
 
+	router.GET("/",func(c *gin.Context){
+		c.JSON(http.StatusOk,gin.H{"base url":"working"})
+	})
+
 	// Sensitive routes with stricter rate limiting
 	router.POST("/upload",
 		middleware.StrictRateLimiter.Limit(),
