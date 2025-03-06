@@ -15,9 +15,9 @@ import (
 )
 
 func init() {
-	if err := initializers.LoadEnv(); err != nil {
-		log.Fatalf("[CRITICAL] Failed to load env: %s", err)
-	}
+	// if err := initializers.LoadEnv(); err != nil {
+	// 	log.Fatalf("[CRITICAL] Failed to load env: %s", err)
+	// }
 	if err := initializers.ConnectDB(); err != nil {
 		log.Fatalf("[CRITICAL] Failed to initialize database connection: %s", err)
 	}
