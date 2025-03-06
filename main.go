@@ -42,7 +42,7 @@ func main() {
 	router.Use(middleware.GlobalRateLimiter.Limit())
 
 	router.GET("/",func(c *gin.Context){
-		c.JSON(http.StatusOk,gin.H{"base url":"working"})
+		c.JSON(http.StatusOK,gin.H{"base url":"working"})
 	})
 
 	// Sensitive routes with stricter rate limiting
