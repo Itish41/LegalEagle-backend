@@ -54,18 +54,22 @@ func NewDocumentService(db *gorm.DB) (*DocumentService, error) {
 		return nil, fmt.Errorf("failed to create AWS session: %w", err)
 	}
 
-	// Initialize Elasticsearch client
-	esURL := os.Getenv("ELASTICSEARCH_URL")
+	// Initialize Elasticsearch client with Elastic Cloud configuration
+	esURL := "https://9599cea5e64e4db2b21dbee49e7ca79e.asia-south1.gcp.elastic-cloud.com:443"
+	esAPIKey := os.Getenv("ELASTICSEARCH_API_KEY") // Set this to your encoded API key
 	var esClient *elasticsearch.Client
-	if esURL != "" {
+
+	if esURL != "" && esAPIKey != "" {
 		esConfig := elasticsearch.Config{
 			Addresses: []string{esURL},
+			APIKey:    esAPIKey,
 		}
-		var err error
 		esClient, err = elasticsearch.NewClient(esConfig)
 		if err != nil {
 			log.Printf("Warning: Failed to create Elasticsearch client: %v", err)
 		}
+	} else {
+		log.Println("Warning: ELASTICSEARCH_API_KEY is not set. Elasticsearch client will not be initialized.")
 	}
 
 	return &DocumentService{s3Client: s3.New(sess), esClient: esClient, db: db}, nil
