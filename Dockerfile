@@ -14,7 +14,6 @@ RUN go mod tidy
 COPY . .
 
 # Copy the .env file
-COPY .env ./
 
 # Build the application, explicitly naming the output and ensuring static linking
 RUN CGO_ENABLED=0 go build -o LegalEagle
@@ -29,7 +28,6 @@ WORKDIR /app
 COPY --from=builder /app/LegalEagle .
 
 # Copy the .env file
-COPY .env ./
 
 # Copy the migration files
 COPY db/migrations ./db/migrations
